@@ -15,14 +15,32 @@
 	<context:property-placeholder location="classpath*:*.properties" />
 	
 	<context:component-scan base-package="com.wtp">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+<!-- 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
 	</context:component-scan>
 	
 	<tx:annotation-driven/>
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource" />
 
-	<bean id="dataSource"></bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:13306/?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8&amp;jdbcCompliantTruncation=false&amp;connectTimeout=60000&amp;socketTimeout=60000" />
+		<property name="username" value="test"></property>
+		<property name="password" value="test" />
+		<property name="maxActive" value="4"/>	<!-- Maximum number of connection -->
+		<property name="initialSize" value="4"/><!-- Number of connections to be created initially -->
+		<property name="maxIdle" value="2"/>	<!-- Maximum number of connections to be stored in poll and unusued  -->
+		<property name="minIdle" value="2"/>	<!-- Minimum number of connections to be stored in poll and unusued  -->
+		<property name="maxWait" value="3000"/>	<!-- The time to wait for a connection to be returned -->
+		<property name="poolPreparedStatements" value="true"/>
+		<property name="maxOpenPreparedStatements" value="1024"/>
+		<property name="testOnBorrow" value="false"/>
+		<property name="testWhileIdle" value="true" />
+		<property name="timeBetweenEvictionRunsMillis" value="10000" />
+		<property name="numTestsPerEvictionRun" value="10" />		
+		<property name="logAbandoned" value="true"/>
+		<property name="validationQuery" value="SELECT 1"/>
+	</bean>
 	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="dataSource" ref="dataSource" />
