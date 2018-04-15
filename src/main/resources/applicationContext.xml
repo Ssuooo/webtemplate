@@ -44,7 +44,7 @@
 	
 	<bean id="masterSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="dataSource" ref="masterDataSource" />
-		<property name="configLocation" value="classpath:/SqlMapConfig.xml" />
+		<property name="configLocation" value="classpath:SqlmapConfig.xml" />
 	</bean>
 	
 	<bean id="slaveDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
