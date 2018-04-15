@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Member">
+	<typeAlias alias="Member" type="com.wtp.model.Member" />
+
+	<delete id="delete" parameterClass="int">
+		DELETE 	FROM member 
+		WHERE 	id = #id#
+	</delete>
+
+	<insert id="add" parameterClass="Member">
+		INSERT INTO member (id, name, joined) VALUES(#id#, #name#, #joined#)
+ 	</insert>
+ 	
+	<update id="update" parameterClass="Member">
+		UPDATE 	member 
+		SET 	name = #name#, joined = #joined# 
+		WHERE 	id = #id#
+	</update>
+ 	
+	<select id="selectMemberList" parameterClass="Member" resultClass="Member">
+		SELECT 	id, name, joined
+		FROM	member 
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="id">
+				id = #id#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY id
+ 	</select>
+</sqlMap>
