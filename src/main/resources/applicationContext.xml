@@ -69,7 +69,7 @@
 	
 	<bean id="slaveSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="dataSource" ref="slaveDataSource" />
-		<property name="configLocation" value="classpath:/SqlMapConfig.xml" />
+		<property name="configLocation" value="classpath:/SqlmapConfig.xml" />
 	</bean>
 	
 	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
