@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HelloController {
 	@RequestMapping("/hello")
-	public String hello(@RequestParam String name, Model model) {
+	public void hello(@RequestParam String name, Model model) {
 		model.addAttribute("hello", "Hello! "+ name);
-		return "/WEB-INF/views/hello.jsp";
+//		return "hello";
 	}
 }
