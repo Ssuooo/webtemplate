@@ -35,6 +35,6 @@ public class MemberController {
 			return "member/form";
 		}
 		memberBO.add(member);
-		return "redirect:/member/list";
+		return "redirect:/app/member/list";
 	}
 }
