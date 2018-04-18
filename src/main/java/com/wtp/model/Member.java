@@ -14,9 +14,7 @@ public class Member {
 
 	private Date joined;
 	
-	public Member() {
-		this.id = System.currentTimeMillis();
-	}
+//	public Member() {	}
 
 	public Long getId() {
 		return id;
