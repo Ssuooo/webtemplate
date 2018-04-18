@@ -8,11 +8,11 @@
 <title>Sample Member List</title>
 </head>
 <body>
-<a href="<c:url value='/app/member/form'/>">Add</a>
+<a href="<c:url value='/member/form'/>">Add</a>
 <h2>Member List</h2>
 <ul>
 <c:forEach items="${list}" var="member">
-	<li>${member.name}</li>	
+	<li>${member.id} | ${member.name} | ${member.joined} | <a href="/member/update/${member.id}">Update</a> | <a href="/member/delete/${member.id}">Delete</a></li>	
 </c:forEach>
 </ul>
 </body>
