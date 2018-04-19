@@ -46,23 +46,24 @@ public class MemberController {
 	@RequestMapping("/update/{id}")
 	public ModelAndView updateForm(@PathVariable int id) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("member", memberBO.get(Long.getLong(String.valueOf(id))));
+		mav.addObject("member", memberBO.get(Long.parseLong(String.valueOf(id))));
 		mav.setViewName("member/update");
 		return mav;
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public ModelAndView updateSubmit(@Valid Member member, BindingResult result, SessionStatus status) throws Exception {
+	public String updateSubmit(@Valid Member member, BindingResult result, SessionStatus status) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
-			mav.setViewName("/member/update");
-			return mav;
+			return "redirect:/member/list";
+//			mav.setViewName("/member/update");
+//			return mav;
 		}
 		
 		memberBO.update(member);
 		status.setComplete();
-		mav.setViewName("/member/list");
-		return mav;		
+//		mav.setViewName("/member/list");
+		return "redirect:/member/list";		
 	}
 	
 	@RequestMapping("/delete/{id}")

@@ -23,6 +23,7 @@ public class MemberDAO extends AbstractDAO{
 	public Member selectMember(Long id) throws SQLException {
 		Member member = new Member();
 		member.setId(id);
+		System.out.println("selectMember:" + member.getId());
 		return (Member) slave.queryForObject(NAMESPACE + "selectMemberList", member);
 	}
 
