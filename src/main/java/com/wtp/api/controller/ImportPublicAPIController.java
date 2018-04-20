@@ -38,6 +38,7 @@ public class ImportPublicAPIController {
 	@Resource(name="publicApiDAO")
 	private PublicApiDAO publicApiDAO;
 	
+	@RequestMapping("/import")
 	public void importPublicAPI (@RequestParam(required=true, value="serviceKey") String serviceKey, 
 								 @RequestParam(required=true, value="lawdCd") String lawdCd, 
 								 @RequestParam(required=true, value="dealYmd") String dealYmd) throws Exception {
