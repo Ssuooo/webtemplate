@@ -39,15 +39,8 @@ public class ApiListController {
 	
 	@RequestMapping("/apiList")
 	public String getList(Model model) throws Exception {
-//		model.addAttribute("dealList", apiListBO.selectApartDealingCostList(param));
-		return "/api/apiList";
-//		ModelAndView mav = new ModelAndView();
-		
-//		mav.setViewName("/info");
-//		return mav;
+		return "";
 	}
-	
-	 
 	
 	// get/deposit/30000 : 보증금 30000만원 미만
 	
