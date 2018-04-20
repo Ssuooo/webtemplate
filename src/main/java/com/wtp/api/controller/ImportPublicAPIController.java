@@ -1,16 +1,24 @@
-package com.wtp.api;
+package com.wtp.api.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.wtp.api.PublicApiDAO;
 
 /**
  *  공공 API 를 읽어서 db에 저장한다. 
@@ -27,7 +35,10 @@ public class ImportPublicAPIController {
 	// LAWD_CD=11110&	// 지역 코드 
 	// DEAL_YMD=201512";// 계약월 
 	
-	public void importPublicAPI (@RequestParam String apiUrl) {
+	@Resource(name="publicApiDAO")
+	private PublicApiDAO publicApiDAO;
+	
+	public void importPublicAPI (@RequestParam String apiUrl) throws Exception {
 		HttpURLConnection con = null;
 		InputStream inStream = null;
 		BufferedReader in = null;
@@ -50,6 +61,29 @@ public class ImportPublicAPIController {
 			
 			SAXBuilder builder = new SAXBuilder();
 			Document document = builder.build(in);
+			Element rootElm = document.getRootElement();
+			List<Element> itemList = rootElm.getChildren("item");
+			
+			if (itemList.size() > 0) {
+				for (Element item : itemList) {
+					HashMap<String, Object> savingMap = new HashMap<String, Object>();
+					
+					savingMap.put("building_year", item.getChildText("건축년도"));
+					savingMap.put("contract_year", item.getChildText("년"));
+					savingMap.put("dong", item.getChildText("법정동"));
+					savingMap.put("deposit", item.getChildText("보증금액"));
+					savingMap.put("building_name", item.getChildText("아파트"));
+					savingMap.put("contract_month", item.getChildText("월"));
+					savingMap.put("rent", item.getChildText("월세금액"));
+					savingMap.put("contract_date", item.getChildText("일"));
+					savingMap.put("private_area", item.getChildText("전용면적"));
+					savingMap.put("bunji", item.getChildText("지번"));
+					savingMap.put("region_code", item.getChildText("지역코드"));
+					savingMap.put("floor", item.getChildText("층"));
+					
+					publicApiDAO.insertApartDealingCost(savingMap);
+				}
+			}
 /*
  * 
 <response>
@@ -110,11 +144,17 @@ public class ImportPublicAPIController {
  */
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				con.disconnect();
+			}
+			if (inStream != null) {
+				inStream.close();
+			}
+			if (in != null) {
+				in.close();
+			}
 		}
-		
-		//	2. api 읽어서 객체로 변환
-		
-		// 	3. db 저장 
-	
+
 	}
 }

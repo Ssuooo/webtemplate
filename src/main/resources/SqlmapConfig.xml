@@ -5,4 +5,5 @@
 <sqlMapConfig>
 	<settings useStatementNamespaces="true" />
 	<sqlMap resource="sqlmap/Member.xml" />
+	<sqlMap resource="sqlmap/PublicAPI.xml" />
 </sqlMapConfig>

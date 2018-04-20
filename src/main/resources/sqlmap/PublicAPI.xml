@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PublicAPI">
+	<insert id="insertApartDealingCost" parameterClass="Member">
+		INSERT INTO /* PublicAPI.insertApartDealingCost */	apart_dealcost 
+			(	mod_time, building_year, contract_year, dong, deposit, building_name, 
+			 	contract_month, rent,  contract_date, private_area, bunji, region_code, floor) 
+		VALUES(	NOW(), #building_year#, #contract_year#, #dong#, #deposit#, #building_name#, 
+				#contract_month#, #rent#, #contract_date#, #private_area#, #bunji#, #region_code#, #floor#)
+ 	</insert>
+ 	
+ 	<select id="selectApartDealingCostList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+ 		SELECT	/* PublicAPI.selectApartDealingCostList */
+ 				id, mod_time, building_year, contract_year, dong, deposit, building_name, 
+			 	contract_month, rent,  contract_date, private_area, bunji, region_code, floor
+ 		FROM	apart_dealcost
+ 		<dynamic prepend="WHERE">
+ 			<isNotEmpty property="region_code" prepend="AND">
+ 				region_code = #region_code#
+ 			</isNotEmpty>
+ 			<isNotEmpty property="deposit" prepend="AND">
+ 				deposit <![CDATA[ <= ]]> #deposit#
+ 			</isNotEmpty>
+ 			<isNotEmpty property="rent" prepend="AND">
+ 				rent <![CDATA[ <= ]]>  #rent#
+ 			</isNotEmpty>
+ 		</dynamic>
+ 	</select>
+
+</sqlMap>
