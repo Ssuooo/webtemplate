@@ -1,12 +1,13 @@
 package com.wtp;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.wtp.model.Member;
+
+import com.wtp.common.AbstractDAO;
 
 @Repository("memberDAO")
 public class MemberDAO extends AbstractDAO{
