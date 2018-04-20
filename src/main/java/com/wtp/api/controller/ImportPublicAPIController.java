@@ -30,7 +30,7 @@ import com.wtp.api.PublicApiDAO;
 @Controller
 @RequestMapping("/importapi")
 public class ImportPublicAPIController {
-	private static final String apiUrl = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?";
+	private static final String apatmentDealUrl = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?";
 	// serviceKey=XXX
 	// LAWD_CD=11110&	// 지역 코드 
 	// DEAL_YMD=201512";// 계약월 
@@ -38,7 +38,9 @@ public class ImportPublicAPIController {
 	@Resource(name="publicApiDAO")
 	private PublicApiDAO publicApiDAO;
 	
-	public void importPublicAPI (@RequestParam String apiUrl) throws Exception {
+	public void importPublicAPI (@RequestParam(required=true, value="serviceKey") String serviceKey, 
+								 @RequestParam(required=true, value="lawdCd") String lawdCd, 
+								 @RequestParam(required=true, value="dealYmd") String dealYmd) throws Exception {
 		HttpURLConnection con = null;
 		InputStream inStream = null;
 		BufferedReader in = null;
@@ -47,7 +49,10 @@ public class ImportPublicAPIController {
 		//	1. www.data.go.kr에서 api 읽기
 		try {
 			// api 호출 
+			String apiUrl = apatmentDealUrl.replaceAll(" ", "");
+			apiUrl += "serviceKey=" + serviceKey +"&LAWD_CD=" + lawdCd + "&DEAL_YMD=" + dealYmd;
 			URL conUrl = new URL(apiUrl.replaceAll(" ", ""));
+			
 			con = (HttpURLConnection)conUrl.openConnection();
 			
 			con.setRequestMethod("POST");
