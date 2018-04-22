@@ -14,7 +14,7 @@ public class ApiListBO {
 	@Resource(name="publicApiDAO")
 	private PublicApiDAO publicApiDAO;
 	
-	public List<HashMap<String, Object>> selectApartDealingCostList(HashMap param) throws Exception {
-		return publicApiDAO.selectApartDealingCostList(param);
+	public List<HashMap<String, Object>> selectApartRentList(HashMap param) throws Exception {
+		return publicApiDAO.selectApartRentList(param);
 	}
 }

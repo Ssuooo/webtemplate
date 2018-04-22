@@ -29,7 +29,7 @@ public class ApiListController {
 	public String getListbyRegionCode(@RequestParam String regionCode, Model model) throws Exception {
 		HashMap param = new HashMap();
 		param.put("regionCode", regionCode);
-		model.addAttribute("dealList", apiListBO.selectApartDealingCostList(param));
+		model.addAttribute("dealList", apiListBO.selectApartRentList(param));
 		return "/api/apiList";
 //		ModelAndView mav = new ModelAndView();
 		

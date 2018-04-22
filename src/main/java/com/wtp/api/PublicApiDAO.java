@@ -11,11 +11,23 @@ import com.wtp.common.AbstractDAO;
 public class PublicApiDAO extends AbstractDAO {	
 	private final String NAMESPACE = "PublicAPI.";
 	
-	public void insertApartDealingCost(HashMap param) throws Exception {
-		master.insert(NAMESPACE  +"insertApartDealingCost", param);
+	public void insertApartRent(HashMap param) throws Exception {
+		master.insert(NAMESPACE  +"insertApartRent", param);
 	}
 	
-	public List<HashMap<String, Object>> selectApartDealingCostList(HashMap param) throws Exception {
-		return slave.queryForList(NAMESPACE +"selectApartDealingCostList", param);
+	public void insertApartTrade(HashMap param) throws Exception {
+		master.insert(NAMESPACE  +"insertApartTrade", param);
+	}
+	
+	public List<HashMap<String, Object>> selectApartRentList(HashMap param) throws Exception {
+		return slave.queryForList(NAMESPACE +"selectApartRentList", param);
+	}
+	
+	public List<HashMap<String, Object>> selectApartTradeList(HashMap param) throws Exception {
+		return slave.queryForList(NAMESPACE +"selectApartTradeList", param);
+	}
+	
+	public List<HashMap<String, Object>> selectRegionCodeList(HashMap param) throws Exception {
+		return slave.queryForList(NAMESPACE +"selectRegionCodeList", param);
 	}
 }

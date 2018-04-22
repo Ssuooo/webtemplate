@@ -7,6 +7,10 @@
 <title>API RESULT</title>
 </head>
 <body>
-	<a href="<c:url value='/importapi/import' />">Import API</a>
+	<c:forEach var="item" items="${resultList }">
+		<ul>
+			<li>[${item.id }] ${item.building_name} ${item.floor} , ${item.dong} ${item.bunji} , ${item.cost} , ${item.private_area} , ${item.contract_year}-${item.contract_month} ${item.contract_date} , ${item.region_code} , ${item.building_year} 
+		</ul>
+	</c:forEach>
 </body>
 </html>

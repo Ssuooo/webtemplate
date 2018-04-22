@@ -4,19 +4,27 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="PublicAPI">
-	<insert id="insertApartDealingCost" parameterClass="Member">
-		INSERT INTO /* PublicAPI.insertApartDealingCost */	apart_dealcost 
-			(	mod_time, building_year, contract_year, dong, deposit, building_name, 
-			 	contract_month, rent,  contract_date, private_area, bunji, region_code, floor) 
-		VALUES(	NOW(), #building_year#, #contract_year#, #dong#, #deposit#, #building_name#, 
-				#contract_month#, #rent#, #contract_date#, #private_area#, #bunji#, #region_code#, #floor#)
+	<insert id="insertApartRent" parameterClass="java.util.HashMap">
+		INSERT INTO /* PublicAPI.insertApartRent */	apartrent 
+			(	building_name, bunji, region_code, floor, building_year, contract_year,
+				contract_month, contract_date, dong, deposit, rent, private_area, mod_time) 
+		VALUE(	#building_name#, #bunji#, #region_code#, #floor#, #building_year#, #contract_year#, 
+				#contract_month#, #contract_date#, #dong#, #deposit#, #rent#, #private_area#, NOW() )
  	</insert>
  	
- 	<select id="selectApartDealingCostList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
- 		SELECT	/* PublicAPI.selectApartDealingCostList */
+ 	<insert id="insertApartTrade" parameterClass="java.util.HashMap">
+		INSERT INTO /* PublicAPI.insertApartTrade */	aparttrade 
+			(	building_name, bunji, region_code, floor, building_year, contract_year,
+				contract_month, contract_date, dong, cost, private_area, mod_time ) 
+		VALUE(	#building_name#, #bunji#, #region_code#, #floor#, #building_year#, #contract_year#, 
+				#contract_month#, #contract_date#, #dong#, #cost#, #private_area#, NOW())
+ 	</insert>
+ 	
+ 	<select id="selectApartRentList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+ 		SELECT	/* PublicAPI.selectApartRentList */
  				id, mod_time, building_year, contract_year, dong, deposit, building_name, 
 			 	contract_month, rent,  contract_date, private_area, bunji, region_code, floor
- 		FROM	apart_dealcost
+ 		FROM	apartrent
  		<dynamic prepend="WHERE">
  			<isNotEmpty property="region_code" prepend="AND">
  				region_code = #region_code#
@@ -29,5 +37,33 @@
  			</isNotEmpty>
  		</dynamic>
  	</select>
+ 	
+ 	<select id="selectApartTradeList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+ 		SELECT	/* PublicAPI.selectApartTradeList */
+ 				id, building_name, bunji, region_code, floor, building_year, contract_year,
+				contract_month, contract_date, dong, cost, private_area, mod_time
+ 		FROM	aparttrade
+ 		<dynamic prepend="WHERE">
+ 			<isNotEmpty property="region_code" prepend="AND">
+ 				region_code = #region_code#
+ 			</isNotEmpty>
+ 			<isNotEmpty property="cost" prepend="AND">
+ 				cost <![CDATA[ <= ]]> #cost#
+ 			</isNotEmpty>
+ 			<isNotEmpty property="rent" prepend="AND">
+ 				rent <![CDATA[ <= ]]>  #rent#
+ 			</isNotEmpty>
+ 		</dynamic>
+ 	</select>
 
+	<select id="selectRegionCodeList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT	/* PublicAPI.selectRegionCodeList */
+				id, rep_code, siname, gugun, dong
+		FROM	region_code
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="gugun_rep" prepend="AND">
+ 				gugun_rep = #gugun_rep#
+ 			</isNotEmpty>
+		</dynamic>
+	</select>
 </sqlMap>
