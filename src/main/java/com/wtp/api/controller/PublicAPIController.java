@@ -51,7 +51,7 @@ public class PublicAPIController {
 
 	// cost 미만 매매 목록 가져오기 
 	// Model만 사용하기 
-	@RequestMapping("/get/trade/cost/{cost}")
+	@RequestMapping(value="/trade/cost/{cost}", method=RequestMethod.GET)
 	public String getTradeListbyCost(@PathVariable String cost, Model model) throws Exception {
 		HashMap param = new HashMap();
 		param.put("cost", cost);
@@ -61,7 +61,7 @@ public class PublicAPIController {
 	
 	// 해당 지역코드의 매매가 목록 가져오기 
 	// ModelAndView 사용하기
-	@RequestMapping("/get/trade/regionCode/{regionCode}")
+	@RequestMapping(value="/trade/regionCode/{regionCode}", method=RequestMethod.GET)
 	public ModelAndView getTradeListbyRegionCode(@PathVariable String regionCode)  throws Exception {//, Model model) throws Exception {
 		HashMap param = new HashMap();
 		param.put("region_code", regionCode);
@@ -99,9 +99,7 @@ public class PublicAPIController {
 			
 			con = (HttpURLConnection)conUrl.openConnection();
 			
-			con.setRequestMethod("POST");
-			con.setDoOutput(true);
-			con.setDoInput(true);
+			con.setRequestMethod("GET");
 			con.connect();
 
 			inStream = con.getInputStream();

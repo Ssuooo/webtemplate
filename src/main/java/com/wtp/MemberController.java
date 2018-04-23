@@ -56,17 +56,15 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
 			return "redirect:/member/list";
-//			mav.setViewName("/member/update");
-//			return mav;
 		}
 		
 		memberBO.update(member);
 		status.setComplete();
-//		mav.setViewName("/member/list");
+		
 		return "redirect:/member/list";		
 	}
 	
-	@RequestMapping("/delete/{id}")
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
 	public String delete(@PathVariable int id) throws Exception {
 		memberBO.delete(id);
 		return "redirect:/member/list";
